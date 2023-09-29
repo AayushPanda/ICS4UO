@@ -2,38 +2,33 @@ package OOP2;
 
 public class HourlyEmployee extends Employee{
 
-    private double annualSalary;
-    private int paymentsPerYear;
+    private double hourlyRate;
 
-    public HourlyEmployee(String employeeID, String name, String birthdate, String hireDate, String endDate, double annualSalary, int paymentsPerYear){
-        super(employeeID, name, birthdate, hireDate, endDate);
-        this.annualSalary = annualSalary;
-        this.paymentsPerYear = paymentsPerYear;
+    public HourlyEmployee(String employeeID, String name, String birthdate, String hireDate, double hourlyRate){
+        super(employeeID, name, birthdate, hireDate);
+        this.hourlyRate = hourlyRate;
     }
 
-    public void retire(){
-        this.terminate();
+    public double collectPay(int hoursWorked){
+        return this.hourlyRate * hoursWorked;
     }
 
-    public double collectPay(){
-        return this.annualSalary / this.paymentsPerYear;
+    public double getDoublePay(int hoursWorked){
+        return this.collectPay(hoursWorked)*2;
     }
 
-    public double getAnnualSalary(){
-        return this.annualSalary;
+    public String toString(){
+        return "Employee ID: " + this.getEmployeeID() + "\nName: " + this.getName() + "\nBirthdate: " + this.getBirthdate() + "\nHire Date: " + this.getHireDate() + "\nHourly Rate: " + this.hourlyRate;
     }
 
-    public int getPaymentsPerYear(){
-        return this.paymentsPerYear;
+    // Getters and Setters
+
+    public double getHourlyRate(){
+        return this.hourlyRate;
     }
 
-    public void setAnnualSalary(double annualSalary){
-        this.annualSalary = annualSalary;
+    public void setHourlyRate(double hourlyRate){
+        this.hourlyRate = hourlyRate;
     }
-
-    public void setPaymentsPerYear(int paymentsPerYear){
-        this.paymentsPerYear = paymentsPerYear;
-    }
-
 
 }

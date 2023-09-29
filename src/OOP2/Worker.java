@@ -1,58 +1,63 @@
 package OOP2;
 
-public class Worker{
+public abstract class Worker{
+
     private String name;
-    private String birthDate;
-    private String endDate;
-    private Boolean isTerminated = false;
-    private double wage;
-    
-    public Worker(String name, String birthdate, String endDate, boolean wage){
+    private String birthdate;
+    protected String endDate;
+
+    public Worker(String name, String birthdate) {
         this.name = name;
-        this.birthDate = birthdate; // format: yyyy-mm-dd
-        this.endDate = endDate;
+        this.birthdate = birthdate; // yyyy-mm-dd
     }
 
+    public abstract double collectPay();
+
+    public void terminate(String endDate){
+        this.endDate = endDate;
+    }   
+
     public int getAge(){
-        int year = Integer.parseInt(this.birthDate.substring(0, 4));
-        int age = 2021 - year;
+        int birthyear = Integer.parseInt(this.birthdate.substring(0, 4));
+        int birthmonth = Integer.parseInt(this.birthdate.substring(5, 7));
+        int birthday = Integer.parseInt(this.birthdate.substring(8, 10));
+        int currentyear = Integer.parseInt(java.time.LocalDate.now().toString().substring(0, 4));
+        int currentmonth = Integer.parseInt(java.time.LocalDate.now().toString().substring(5, 7));
+        int currentday = Integer.parseInt(java.time.LocalDate.now().toString().substring(8, 10));
+        int age = currentyear - birthyear;
+        if (currentmonth < birthmonth){
+            age -= 1;
+        } else if (currentmonth == birthmonth){
+            if (currentday < birthday){
+                age -= 1;
+            }
+        }
         return age;
     }
 
-    public double collectPay(){
-        return this.wage;
-    };
+    // Getters and Setters
 
-    public void terminate(){
-        isTerminated = true;
-    };
-
-    public Boolean getIsTerminated(){
-        return this.isTerminated;
-    }
-
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    public String getBirthDate(){
-        return this.birthDate;
-    }
+    public String getBirthdate() {
+        return this.birthdate;
+    }   
 
-    public String getEndDate(){
+    public String getEndDate() {
         return this.endDate;
-    }
+    }       
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
+    }   
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
     }
 
-    public void setBirthDate(String birthDate){
-        this.birthDate = birthDate;
-    }
-
-    public void setEndDate(String endDate){
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
-
 }
