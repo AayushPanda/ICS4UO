@@ -1,16 +1,15 @@
 package OnScreenTest2;
 
-import java.util.ArrayList;
 
 public class Polygon {
     private int sides;
+    protected double[] sideLengths;
     private String unitMeasure;
-    protected ArrayList<Double> sideLengths = new ArrayList<Double>();
-
 
     public Polygon(int sides, String unitMeasure){
         this.sides = sides;
         this.unitMeasure = unitMeasure;
+        this.sideLengths = new double[sides];
     }
 
 
@@ -35,10 +34,6 @@ public class Polygon {
     }
 
     public double[] getSideLengths(){
-        double[] sideLengths = new double[3];
-        for(int i = 0; i < 3; i++){
-            sideLengths[i] = this.sideLengths.get(i);
-        }
         return sideLengths;
     }
 

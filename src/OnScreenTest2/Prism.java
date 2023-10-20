@@ -12,7 +12,7 @@ public class Prism {
     public static double surfaceArea(Polygon basePolygon, double depth){
         double area = 0;
         area += 2*basePolygon.area()*2;
-        for(Double sideLength : basePolygon.getSideLengths()){
+        for(Double sideLength : basePolygon.sideLengths){
             area += sideLength*depth;
         }
         return area;

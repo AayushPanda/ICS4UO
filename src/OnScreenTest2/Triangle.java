@@ -17,9 +17,9 @@ public class Triangle extends Polygon{
         this.sideA = sideA;
         this.sideB = sideB;
         this.sideC = sideC;
-        this.sideLengths.add(sideA);
-        this.sideLengths.add(sideB);
-        this.sideLengths.add(sideC);
+        this.sideLengths[0] = sideA;
+        this.sideLengths[1] = sideB;
+        this.sideLengths[2] = sideC;
         this.base = base;
         this.height = height;
 

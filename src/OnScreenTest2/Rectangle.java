@@ -9,10 +9,10 @@ public class Rectangle extends Polygon {
         super(4, unitMeasure);
         this.length = length;
         this.width = width;
-        this.sideLengths.add(length);
-        this.sideLengths.add(width);
-        this.sideLengths.add(length);
-        this.sideLengths.add(width);
+        this.sideLengths[0] = length;
+        this.sideLengths[1] = width;
+        this.sideLengths[2] = length;
+        this.sideLengths[3] = width;
     }
 
     @Override
