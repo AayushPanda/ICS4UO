@@ -7,7 +7,7 @@ public class ShellSort {
     public static int sort(int[] arr){
         // Shellsort with halving gap sequence, with comments on every line
         int n = arr.length;
-        int ctr = 1;
+        int ctr = 0;
         int gap = n/2; // Start with a big gap, then reduce the gap
         while (gap > 0){
             System.out.println("-------------");
@@ -16,6 +16,7 @@ public class ShellSort {
                 int temp = arr[i]; // Store a value in the gap
                 System.out.println("Temp:= " + temp);
                 int j = i; // Shift earlier gap-sorted elements up until the correct location for a[i] is found
+                boolean flag = false;
                 while (j >= gap && arr[j - gap] > temp){
                     arr[j] = arr[j - gap];
                     String output = "";
@@ -35,7 +36,14 @@ public class ShellSort {
                     System.out.println(output.replace(", ,", ",").replace(" ,", ""));
 
                     j -= gap;
-                    ctr++;
+
+                    // To avoid overcounting on first comparision
+                    if(!flag){
+                        flag = true;
+                    } else {
+                        ctr++;
+                    }
+
                 }
                 arr[j] = temp; // Put temp (the original a[i]) in its correct location
                 System.out.print(ctr + ": ");
@@ -46,21 +54,45 @@ public class ShellSort {
                 output += (", **" + arr[j] + "**, ");
                 output += (java.util.Arrays.toString(Arrays.copyOfRange(arr, j + 1, arr.length)).replace("[", "").replace("]", ""));
                 System.out.println(output.replace(", ,", ",").replace(" ,", " "));
-
                 ctr++;
-
-                
             }
             gap /= 2; // Reduce the gap
         }
-        return ctr-1;
+        return ctr;
+    }
+
+    public static int quietSort(int[] arr){
+        // Shellsort with halving gap sequence, with comments on every line
+        int n = arr.length;
+        int ctr = 0;
+        int gap = n/2; // Start with a big gap, then reduce the gap
+        while (gap > 0){
+            for (int i = gap; i < n; i++){
+                int temp = arr[i]; // Store a value in the gap
+                int j = i; // Shift earlier gap-sorted elements up until the correct location for a[i] is found
+                boolean flag = false;
+                while (j >= gap && arr[j - gap] > temp){
+                    arr[j] = arr[j - gap];
+                    j -= gap;
+                    if(!flag){
+                        flag = true;
+                    } else {
+                        ctr++;
+                    }
+                }
+                arr[j] = temp; // Put temp (the original a[i]) in its correct location
+                ctr++;
+            }
+            gap /= 2; // Reduce the gap
+        }
+        return ctr;
     }
     public static void main(String[] args) {
-        int[] arr = {5, 9, 5, 7, 3, 8, 2, 6, 1};       
-        System.out.println(java.util.Arrays.toString(arr));
+        int[] arr = {5, 9, 4, 7, 3, 8, 2, 6, 1};       
+        // System.out.println(java.util.Arrays.toString(arr));
         int steps = sort(arr);
-        System.out.println("");
-        System.out.print("Sorted: ");
+        // System.out.println("");
+        // System.out.print("Sorted: ");
         System.out.println(java.util.Arrays.toString(arr));
         System.out.println("Steps taken: " + steps);
     }
