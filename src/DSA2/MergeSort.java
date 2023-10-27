@@ -3,18 +3,19 @@ package DSA2;
 import java.util.Arrays;
 
 public class MergeSort {
+    private static int ctr = 0; // Counter for operations
 
-    public static int[] genNumList(int n){
+    public static int[] genNumList(int n) {
         int[] arr = new int[n];
-        for(int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             arr[i] = i;
         }
         return arr;
     }
 
-    public static int[] shuffle(int[] arr){
-        for(int i = 0; i < arr.length; i++){
-            int j = (int)(Math.random() * arr.length);
+    public static int[] shuffle(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            int j = (int) (Math.random() * arr.length);
             int t = arr[i];
             arr[i] = arr[j];
             arr[j] = t;
@@ -24,58 +25,69 @@ public class MergeSort {
 
     public static void main(String[] args) {
         int[] arr = shuffle(genNumList(12));
-        System.out.println(Arrays.toString(sort(arr)));
+        int[] sortedArr = sort(arr);
+        System.out.println("Original: " + Arrays.toString(arr));
+        System.out.println("Number of operations: " + ctr);
+        System.out.println("Sorted: " + Arrays.toString(sortedArr));
     }
 
-    public static int[] sort(int[] arr){
-        if(arr.length<=1){
+    public static int[] sort(int[] arr) {
+        ctr = 0; // Reset the operation count
+        return mergeSort(arr);
+    }
+
+    private static int[] mergeSort(int[] arr) {
+        if (arr.length <= 1) {
             return arr;
         }
-        
-        int mid = arr.length/2;
-        int[] l = new int[mid];
-        int[] r = new int[arr.length-mid];
 
-        for(int i = 0; i<arr.length; i++){
-            if(i<mid){
-                l[i] = arr[i];
+        int mid = arr.length / 2;
+        int[] left = new int[mid];
+        int[] right = new int[arr.length - mid];
+
+        for (int i = 0; i < arr.length; i++) {
+            if (i < mid) {
+                left[i] = arr[i];
             } else {
-                r[i-mid] = arr[i];
+                right[i - mid] = arr[i];
             }
         }
-        l = sort(l);
-        r = sort(r);
+        left = mergeSort(left);
+        right = mergeSort(right);
 
-        return merge(l,r);
+        return merge(left, right);
     }
 
-    public static int[] merge(int[] l, int[] r){
-        int[] result = new int[l.length+r.length];
-        int lCursor = 0;
-        int rCursor = 0;
+    private static int[] merge(int[] left, int[] right) {
+        int[] result = new int[left.length + right.length];
+        int leftCursor = 0;
+        int rightCursor = 0;
         int maxCursor = 0;
 
-        while(lCursor<l.length && rCursor<r.length){
-            if(l[lCursor]<r[rCursor]){
-                result[maxCursor] = l[lCursor];
-                lCursor++;
+        while (leftCursor < left.length && rightCursor < right.length) {
+            if (left[leftCursor] < right[rightCursor]) {
+                result[maxCursor] = left[leftCursor];
+                leftCursor++;
             } else {
-                result[maxCursor] = r[rCursor];
-                rCursor++;
+                result[maxCursor] = right[rightCursor];
+                rightCursor++;
             }
             maxCursor++;
+            ctr++; // Count the comparison and assignment operations
         }
 
-        while(lCursor<l.length){
-            result[maxCursor] = l[lCursor];
-            lCursor++;
+        while (leftCursor < left.length) {
+            result[maxCursor] = left[leftCursor];
+            leftCursor++;
             maxCursor++;
+            ctr++; // Count the assignment operations
         }
 
-        while(rCursor<r.length){
-            result[maxCursor] = r[rCursor];
-            rCursor++;
+        while (rightCursor < right.length) {
+            result[maxCursor] = right[rightCursor];
+            rightCursor++;
             maxCursor++;
+            ctr++; // Count the assignment operations
         }
 
         return result;
