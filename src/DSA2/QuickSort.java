@@ -25,12 +25,15 @@ public class QuickSort {
     }
 
     public static void main(String[] args) {
-        int[] arr = shuffle(genNumList(12));
-        System.out.println("Original: " + Arrays.toString(arr));
+        int l = 1000;
+        int[] arr = shuffle(genNumList(l));
+        //System.out.println("Original: " + Arrays.toString(arr));
         sort(arr, 0, arr.length - 1);
+        System.out.println("Quicksort");
+        System.out.println("Array length: " + l);
         System.out.println("Steps: "  + ctr);
         ctr = 0;
-        System.out.println("Sorted: " + Arrays.toString(arr));
+        //System.out.println("Sorted: " + Arrays.toString(arr));
     }
     
     public static int partition(int[] arr, int low, int high){

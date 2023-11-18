@@ -24,11 +24,14 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        int[] arr = shuffle(genNumList(12));
+        int l = 1000;
+        int[] arr = shuffle(genNumList(l));
+        //System.out.println("Original: " + Arrays.toString(arr));
+        System.out.println("Mergesort");
+        System.out.println("Array length: " + l);
         int[] sortedArr = sort(arr);
-        System.out.println("Original: " + Arrays.toString(arr));
-        System.out.println("Number of operations: " + ctr);
-        System.out.println("Sorted: " + Arrays.toString(sortedArr));
+        System.out.println("Steps: " + ctr);
+        //System.out.println("Sorted: " + Arrays.toString(sortedArr));
     }
 
     public static int[] sort(int[] arr) {
@@ -52,6 +55,8 @@ public class MergeSort {
                 right[i - mid] = arr[i];
             }
         }
+
+        // Logarithmic reduction
         left = mergeSort(left);
         right = mergeSort(right);
 
@@ -64,6 +69,7 @@ public class MergeSort {
         int rightCursor = 0;
         int maxCursor = 0;
 
+        // Merge the two sorted subarrays
         while (leftCursor < left.length && rightCursor < right.length) {
             if (left[leftCursor] < right[rightCursor]) {
                 result[maxCursor] = left[leftCursor];
@@ -75,6 +81,8 @@ public class MergeSort {
             maxCursor++;
             ctr++; // Count the comparison and assignment operations
         }
+
+        // Copy the remaining elements of the subarray that has not been fully copied
 
         while (leftCursor < left.length) {
             result[maxCursor] = left[leftCursor];

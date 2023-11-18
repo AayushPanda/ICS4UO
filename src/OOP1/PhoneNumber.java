@@ -1,4 +1,4 @@
-package ICS;
+package OOP1;
 
 public class PhoneNumber {
     private int areaCode;

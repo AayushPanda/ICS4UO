@@ -31,4 +31,10 @@ public class HourlyEmployee extends Employee{
         this.hourlyRate = hourlyRate;
     }
 
+    @Override
+    public double collectPay() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'collectPay'");
+    }
+
 }
