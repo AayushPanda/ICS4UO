@@ -10,10 +10,9 @@ public class CourseLinkedlist {
         Student aayushPanda = new Student(894896, "Panda", "Aayush");
 
         StudentNode aayushNode = new StudentNode(aayushPanda, null);
-        StudentNode yiboNode = new StudentNode(yiboSun, aayushNode);
-        StudentNode headNode = new StudentNode(markPeng, yiboNode);
 
-        CourseLinkedlist students = new CourseLinkedlist(headNode, 3);
+        CourseLinkedlist students = new CourseLinkedlist();
+        students.addToFront(aayushPanda);
 
         System.out.println("Original List:");
         students.printList();
@@ -24,6 +23,7 @@ public class CourseLinkedlist {
 
         Student andyLuo = new Student(707918, "Luo", "Andy");
         students.addToEnd(andyLuo);
+        students.printList();
 
         System.out.println("Sorted List:");
         students.sort();
@@ -103,8 +103,12 @@ public class CourseLinkedlist {
                 temp = temp.getNext();
             }
             StudentNode newNode = new StudentNode(student);
-            newNode.setNext(temp.getNext());
-            temp.setNext(newNode);
+            if(temp != null){
+                newNode.setNext(temp.getNext());
+                temp.setNext(newNode);
+            } else {
+                head = newNode;
+            }
             size++;
         }
     }
