@@ -5,11 +5,7 @@ public class CourseLinkedlist {
     private int size;
 
     public static void main(String[] args) {
-        Student markPeng = new Student(711648, "Peng", "Mark");
-        Student yiboSun = new Student(749763, "Sun", "Yibo");
         Student aayushPanda = new Student(894896, "Panda", "Aayush");
-
-        StudentNode aayushNode = new StudentNode(aayushPanda, null);
 
         CourseLinkedlist students = new CourseLinkedlist();
         students.addToFront(aayushPanda);
@@ -97,18 +93,17 @@ public class CourseLinkedlist {
         // O(N) time complexity as we have to traverse the list to get to the index
         if(index < 0 || index > size){
             throw new IndexOutOfBoundsException();
+        } else if(index == 0){
+            head = new StudentNode(student, head);
+            size++;
         } else{
             StudentNode temp = head;
             for(int i = 0; i < index - 1; i++){
                 temp = temp.getNext();
             }
             StudentNode newNode = new StudentNode(student);
-            if(temp != null){
-                newNode.setNext(temp.getNext());
-                temp.setNext(newNode);
-            } else {
-                head = newNode;
-            }
+            newNode.setNext(temp.getNext());
+            temp.setNext(newNode);
             size++;
         }
     }
@@ -138,12 +133,13 @@ public class CourseLinkedlist {
 
     public String toString(){
         // O(N) time complexity as we have to traverse the entire list to get to the end, as we print each node
-        String result = "";
+        String result = "Head";
         StudentNode temp = head;
         while(temp != null){
-            result += temp.toString() + "\n";
+            result += "->" + temp.toString() + "\n";
             temp = temp.getNext();
         }
+        result += "->null";
         return result;
     }
 
