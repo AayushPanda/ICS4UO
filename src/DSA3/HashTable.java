@@ -33,6 +33,17 @@ public class HashTable {
         }
     }
 
+    protected class Tombstone extends Entry {
+        public Tombstone() {
+            super(null, null);
+        }
+
+        @Override
+        public String toString() {
+            return "Tombstone";
+        }
+    }
+
     private int size = 1;
     protected Entry[] table = new Entry[size];
 
@@ -140,7 +151,7 @@ public class HashTable {
             }
             index = hashFunction(index + 1);
         }
-        return null;
+        return new Tombstone();
     }
 
     /**
@@ -175,7 +186,10 @@ public class HashTable {
         if (countNonNull() < size / 2) {
             shrink();
         }
+        if (table.length == 0){
+            table = new Entry[1];
 
+        }
         size = table.length;
         Entry[] temp = new Entry[size];
         for (int i = 0; i < size; i++) {
@@ -234,7 +248,7 @@ public class HashTable {
      *
      * @return The size of the hash table.
      */
-    public int size() {
+    private int size() {
         return size;
     }
 
@@ -274,16 +288,55 @@ public class HashTable {
 
     /**
      * The main method for self-testing the HashTable implementation.
-     */
-    public static void main(String[] args) {
-        // Try adding duplicate keys
-        HashTable table = new HashTable();
-        table.put("a", 1);
-        table.put("b", 2);
-        table.put("c", 3);
-        table.put("d", 4);
-        table.put("a", 5);
-        System.out.println(table);
-        System.out.println(table.get("a"));
-    }
+     */public static void main(String[] args) {
+    HashTable table = new HashTable();
+
+    // Test 1: Adding and retrieving values
+    table.put("a", 1);
+    table.put("b", 2);
+    table.put("c", 3);
+    System.out.println("Test 1: " + (table.get("a").equals(1) && table.get("b").equals(2) && table.get("c").equals(3))); // Expected output: true
+
+    // Test 2: Updating existing key
+    table.put("b", 5);
+    System.out.println("Test 2: " + (table.get("b").equals(5))); // Expected output: true
+
+    // Test 3: Removing a key
+    table.remove("b");
+    System.out.println("Test 3: " + (table.get("b") instanceof Tombstone)); // Expected output: true
+
+    // Test 4: Rehashing and resizing
+    table.put("d", 4);
+    table.put("e", 5);
+    table.put("f", 6);
+    System.out.println("Test 4: " + (table.size() > 1)); // Expected output: true
+
+    // Test 5: Removing non-existing key
+    table.remove("g");
+    System.out.println("Test 5: " + (table.size() > 1)); // Expected output: true
+
+    // Test 6: Check for Tombstone entry after removing a key
+    System.out.println("Test 6: " + (table.get("b") instanceof Tombstone)); // Expected output: true
+
+    // Test 7: Adding duplicate keys
+    table.put("a", 7);
+    System.out.println("Test 7: " + (table.get("a").equals(7))); // Expected output: true
+
+    // Test 8: Check keys() and values() methods
+    Object[] keys = table.keys();
+    Object[] values = table.values();
+    System.out.println("Test 8: " + (keys.length == values.length)); // Expected output: true
+
+    // Test 9: Remove all entries
+    table.remove("a");
+    table.remove("c");
+    table.remove("d");
+    table.remove("e");
+    table.remove("f");
+    System.out.println("Test 9: " + (table.toString().length()==2)); // Expected output: true
+
+    // Test 10: Check countNonNull() method
+    System.out.println("Test 10: " + (table.countNonNull() == 0)); // Expected output: true
+}
+
 }
