@@ -50,7 +50,7 @@ public class Main {
                         System.out.println("Invalid choice\n");
                         break;
                 }
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 System.out.println("Invalid input or parsing error\n");
             }
         }
@@ -111,7 +111,7 @@ public class Main {
     private static void handleAdvanceDays(Client client) {
         System.out.print("Enter number of days: ");
         int days = Integer.parseInt(scanner.nextLine());
-        client.advanceDays(days, 0.20);
+        client.advanceDays(days, 0.20/365);
         System.out.println("Advanced " + days + " days\n");
     }
 
